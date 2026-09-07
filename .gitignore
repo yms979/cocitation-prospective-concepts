@@ -15,7 +15,6 @@ data/*.pth
 data/ridge_weights.npz
 data/recomb_intermediate.pkl
 data/threshold_cap_candidates.npz
-figures/*.html
 
 # python / editors
 __pycache__/
