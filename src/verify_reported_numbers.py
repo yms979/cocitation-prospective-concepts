@@ -98,7 +98,6 @@ def main():
     ok &= check("of the 36, Top-1 cosine >= 0.90", int((sim36.corrected_max_2024plus >= 0.90).sum()), 20)
     ok &= check("of the 36, Top-1 cosine >= 0.85", int((sim36.corrected_max_2024plus >= 0.85).sum()), 33)
     ok &= check("of the 36, Top-1 cosine >= 0.80", int((sim36.corrected_max_2024plus >= 0.80).sum()), 36)
-    ok &= check("Appendix B rows (concepts with Top-1 >= 0.90)", len(pd.read_excel(os.path.join(T, "AppendixB_concepts_over_0.90.xlsx"))), 20)
     ok &= check("Table B.1 rows", len(pd.read_excel(os.path.join(T, "TableB1_final.xlsx"), sheet_name="Table B.1")), 20)
     ok &= check("mean shift in Top-1 cosine due to grammar correction",
                 round(float((sim.corrected_max_2024plus - sim.orig_max_2024plus).mean()), 4), -0.0001)

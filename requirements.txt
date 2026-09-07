@@ -2,42 +2,18 @@
 # Install torch / torch-geometric first, matching your CUDA version:
 #   pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cu121
 #   pip install torch-geometric==2.7.0
-
-# data handling
 pandas==2.2.3
 numpy==2.4.2
 openpyxl==3.1.5
 tqdm==4.66.4
 requests==2.32.5
-scipy==1.17.0
-
-# networks
 networkx==3.5
-igraph==1.0.0                  # layouts for the network figures
-
-# machine learning
 scikit-learn==1.6.1
 xgboost==3.1.1
 torch==2.3.0
 torch-geometric==2.7.0
-sentence-transformers==3.3.1   # local gte-base embedding (robustness run only)
 transformers==4.44.2
-
-# embedding inversion
 vec2text==0.0.13
-
-# LLM APIs (keys via environment variables, see .env.example)
 openai==2.8.1
 anthropic==0.111.0
 google-genai==2.10.0
-pydantic==2.13.4
-langgraph                      # single-model judge (src/06_evaluation/03_*)
-
-# post-processing check
-gliner                         # technical-entity extraction (src/06_evaluation/11_*)
-
-# plotting
-matplotlib==3.10.7
-seaborn==0.13.2
-plotly==6.5.0
-cairosvg                       # SVG -> PDF/PNG for Figure 4 (src/08_figures/07_*)

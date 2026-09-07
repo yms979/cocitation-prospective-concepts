@@ -1,57 +1,30 @@
-# Data dictionary
+# Data
 
-Identifiers are Google Patents publication numbers (`US-10383765-B2`). Prospective
-nodes are named `prospective node k (row k-1)`, where `row k-1` is the 0-based row
-in `predicted_new_links.csv`. Embedding columns hold lists of floats.
-`SHA256SUMS.txt` has a checksum for every file.
-
-US pre-grant numbers lost the leading zero of the serial in the raw export
-(`US-2022101745-A1` should read `US-20220101745-A1`); the files keep the 10-digit
-form for consistency, and `raw/PublicationNumber_corrections.xlsx` maps the numbers
-printed in the manuscript to the correct form.
-
-## raw/
+Identifiers are Google Patents publication numbers. Prospective nodes are named
+`prospective node k (row k-1)`, where `row k-1` is the 0-based row in
+`predicted_new_links.csv`. US pre-grant numbers appear in the 10-digit form of the
+raw export; `raw/PublicationNumber_corrections.xlsx` gives the 11-digit form.
+`SHA256SUMS.txt` lists a checksum per file.
 
 | File | Rows | Description |
 |---|---:|---|
-| `collected_data_abstract_with_citation.csv` | 201 | Seed patents. Google Patents query `"haptics" AND ("kinesthetic" OR "tactile") AND ("feedback" OR "sensing") AND ("robot")`, US, filed 2020-01-01 to 2023-12-31. Abstracts and `;`-separated backward citations from BigQuery `patents-public-data`. |
-| `Cited_patent_data.csv` | 5,601 | Title, abstract, publication date and CPC codes of every patent cited by a seed. |
-| `validation_abstract.csv` | 120 | Subsequent patents citing the corpus, with ada-002 embedding. The 108 published 2024 or later form the ">= 2024" reference set. |
-| `PublicationNumber_corrections.xlsx` | 33 | Corrected 11-digit US A1 numbers. |
+| `raw/collected_data_abstract_with_citation.csv` | 201 | Seed patents (haptics-enabled medical robotics, US, filed 2020-2023): title, abstract, `;`-separated cited patents. Google Patents Public Data, BigQuery. |
+| `raw/Cited_patent_data.csv` | 5,601 | Title, abstract, publication date, CPC codes of the cited patents. |
+| `raw/validation_abstract.csv` | 120 | Validation patents filed after the experiment window, with ada-002 embedding. |
+| `networks/patent_co_citation_network_filtered.gexf.gz` | 5,090 / 1,392,858 | Co-citation network (association strength, largest component). |
+| `networks/co_citation_network_with_predicted_links.gexf.gz` | 5,090 / 1,392,913 | With the 55 predicted links; edge attribute `link_status`. |
+| `networks/directed_citation_network_filtered.gexf` | 5,210 / 6,353 | Directed citation network. |
+| `networks/network_with_prospective_nodes.gexf` | 5,265 / 6,463 | With one prospective node per predicted link (`type = prospective`). |
+| `networks/*_edges.csv(.gz)`, `citation_after_nodes.csv` | | Same networks as edge and node lists. |
+| `predicted_new_links.csv` | 55 | node1, node2, probability. |
+| `prospective_node_projected_embeddings_deep_mlp_ada.csv` | 55 | Projection of each prospective node into the ada-002 space. |
+| `final_decoded_results.csv` | 55 | Raw vec2text output. |
+| `final_decoded_results_with_nn.csv` | 55 | Raw output with its ada-002 embedding. |
+| `prospective_nodes_grammar_corrected.xlsx` | 55 | Post-processed concepts used in the manuscript. |
+| `agentjudge_3model_{gpt,claude,gemini}.xlsx` | 55 | Verdict and rationale per criterion for each judge (Table 4). |
+| `agentjudge_3model_combined.xlsx` | 55 | Verdicts side by side; 36 unanimous passes. |
+| `prospective_validation_similarity_matrix.xlsx` | 55 x 120 | Cosine similarity concepts x validation patents. |
+| `similarity_original_vs_corrected_2024plus.xlsx` | 55 | Top-1 cosine to subsequent patents and the matched patent (Table 5, Table B.1). |
 
-## networks/
-
-`.gz` files are decompressed by `scripts/unpack_data.sh`.
-
-| File | Nodes / edges | Description |
-|---|---|---|
-| `patent_co_citation_network_filtered.gexf.gz` | 5,090 / 1,392,858 | Co-citation network, association-strength weights, largest component. |
-| `co_citation_network_with_predicted_links.gexf.gz` | 5,090 / 1,392,913 | Same plus the 55 predicted links; edge attribute `link_status` = Predicted / Unpredicted. |
-| `directed_citation_network_filtered.gexf` | 5,210 / 6,353 | Directed citation network. |
-| `network_with_prospective_nodes.gexf` | 5,265 / 6,463 | Citation network with one prospective node per predicted link (`type = prospective`, degree 2). Input of the GAT. |
-| `cocitation_before_edges.csv.gz`, `cocitation_after_edges.csv.gz` | | Edge lists of the two co-citation networks. |
-| `citation_before_edges.csv`, `citation_after_edges.csv`, `citation_after_nodes.csv` | | Edge and node lists of the two citation networks. |
-
-## Results
-
-| File | Rows | Description |
-|---|---:|---|
-| `predicted_new_links.csv` | 55 | Predicted links: node1, node2, probability. |
-| `prospective_node_projected_embeddings_deep_mlp_ada.csv` | 55 | Projection of each prospective node into the 1,536-d ada-002 space; input of vec2text. |
-| `final_decoded_results.csv` | 55 | Raw vec2text output with round-trip cosine. |
-| `final_decoded_results_with_nn.csv` | 55 | Raw output, its ada-002 embedding and the nearest existing patent. |
-| `prospective_nodes_grammar_corrected.xlsx` | 55 | Grammar-corrected concepts (`gpt-5.4-mini`, temperature 0); the text used in the manuscript and judged. |
-| `agentjudge_3model_{gpt,claude,gemini}.xlsx` | 55 | Per-model verdict and rationale on three criteria (`gpt-5.4-mini`, `claude-opus-4-8`, `gemini-3.5-flash`); overall YES only if all criteria YES. |
-| `agentjudge_3model_combined.xlsx` | 55 | The three verdicts side by side; 36 concepts have three YES votes. |
-| `AGENTJUDGE_FINAL_REPORT.xlsx` | | Summary counts, the four prompt/text configurations compared, the 36 all-agree concepts with their best 2024+ match, and method provenance. |
-| `similarity_original_vs_corrected_2024plus.xlsx` | 55 | Max ada-002 cosine to the 2024+ patents for raw and corrected text, with the best-matching patent. Source of "20 of 36 >= 0.90". |
-| `prospective_nodes_with_openai_similarity.xlsx`, `prospective_nodes_full_similarity_stats.xlsx`, `prospective_validation_similarity_matrix.xlsx`, `prospective_similarity_summary.xlsx` | 55 | Similarity to all 120 validation patents: best match with manual content flag, per-concept statistics, full 55 x 120 matrix, global summary. |
-| `head2head_descriptions.csv`, `head2head_multirun.csv`, `head2head_multirun_top1.npz`, `head2head_agentjudge_gpt55.csv` | 55 | Content-based LLM baseline (`gpt-5.1`, 3 seeds) vs our structure-only concepts, and the `gpt-5.5` judge summary. |
-| `ablation_text_dropout.csv`, `ablation_text_dropout.npz` | 55 | Text-dropout ablation: structure-only vs LLM with abstracts vs LLM with titles. |
-| `postproc_edit_distance.csv`, `postproc_gliner_entities.csv`, `postproc_roundtrip_cosine.csv` | 55 | Effect of grammar correction: token edit distance, GLiNER entity retention, round-trip cosine. |
-
-## Not included
-
-`text_embeddings_*.csv` (100 to 200 MB), `node_embeddings_with_text_embedding_*.csv`
-(200 to 300 MB), `ridge_weights.npz` and `*.pth` projector weights. Regenerated by
-stages 3 and 4, or available from the authors.
+Not included: `text_embeddings_ada.csv`, `node_embeddings_with_text_embedding_ada.csv`
+(200 to 300 MB) and trained projector weights. Regenerated by stages 3 and 4.
