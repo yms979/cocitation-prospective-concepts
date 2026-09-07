@@ -1,0 +1,6 @@
+﻿Criterion,gpt-5.4-mini,claude-opus-4.8,gemini-3.5-flash
+Novelty,47 (85.5%),50 (90.9%),54 (98.2%)
+Plausibility,55 (100.0%),53 (96.4%),50 (90.9%)
+Significance,52 (94.5%),52 (94.5%),44 (80.0%)
+All criteria,46 (83.6%),47 (85.5%),42 (76.4%)
+Unanimous,36 (65.5%),,

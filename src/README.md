@@ -19,4 +19,5 @@ API keys come from environment variables; paths resolve from the repository root
 | 4.5 Table 2 | `07_analysis/01_recombination_cpc.py`, then `02_table2_recombination.py` |
 | 5.2 Concept quality assessment | `06_evaluation/01_agent_as_a_judge_multimodel.py`, then `02_agent_judge_combine.py` |
 | 5.3 Future alignment assessment | `06_evaluation/03_subsequent_patent_similarity.py` |
+| Table 4, Table 5 | `06_evaluation/04_validation_tables.py` |
 | Check reported numbers | `verify_reported_numbers.py` |
