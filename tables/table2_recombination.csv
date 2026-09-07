@@ -1,0 +1,19 @@
+﻿Recombined_areas,Description,Links_n,Share_pct,Share_existing_pct,Ratio
+Cross-area recombinations,,,,,
+A61B 17 × A61B 90,Surgical instruments × Surgical guidance accessories,6.0,10.9,2.19,5.0
+A61B 17 × A61B 34,Surgical instruments × Computer-aided surgery,4.0,7.3,6.4,1.1
+A61B 34 × A61B 90,Computer-aided surgery × Surgical guidance accessories,3.0,5.5,1.7,3.2
+A61B 34 × A61F 2,Computer-aided surgery × Implants and prostheses,3.0,5.5,1.38,3.9
+A61B 1 × A61B 34,Endoscopes × Computer-aided surgery,2.0,3.6,2.56,1.4
+A61B 17 × H10H 20,Surgical instruments × Semiconductor light-emitting devices,2.0,3.6,0.0,n/a
+A61B 34 × G06F 30,Computer-aided surgery × CAD and simulation,2.0,3.6,0.04,90.7
+A61B 34 × G09B 23,Computer-aided surgery × Medical teaching models,2.0,3.6,0.05,74.0
+A61B 6 × A61F 2,Radiation imaging × Implants and prostheses,2.0,3.6,0.08,43.3
+Other cross-area pairs (20 pairs),,20.0,36.4,6.3,5.8
+Subtotal — cross-area,,46.0,83.6,80.47,1.0
+Same-area recombinations,,,,,
+A61B 34 × A61B 34,Computer-aided surgery × Computer-aided surgery,6.0,10.9,2.86,3.8
+A61F 2 × A61F 2,Implants and prostheses × Implants and prostheses,2.0,3.6,1.05,3.5
+A61B 17 × A61B 17,Surgical instruments × Surgical instruments,1.0,1.8,13.9,0.1
+Subtotal — same-area,,9.0,16.4,19.53,0.8
+Total,,55.0,100.0,100.0,1.0
